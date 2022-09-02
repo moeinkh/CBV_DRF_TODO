@@ -1,0 +1,17 @@
+{% extends "../registration/base.html" %}
+
+{% block content %}
+<div class="container col-md-6 shadow-sm rounded p-2 my-5">
+    <form method="post">{% csrf_token %}
+        <div class="row g-3 align-items-center mb-2">
+            <div class="col-auto">
+              <label for="inputPassword6" class="col-form-label">Title</label>
+            </div>
+            <div class="col-auto">
+              <input type="text" id="inputPassword6" name="title" class="form-control" aria-describedby="passwordHelpInline" value="{{object.title}}">
+            </div>
+          </div>
+        <input type="submit" class="btn btn-success" value="Update">
+    </form>
+</div>
+{% endblock content %}

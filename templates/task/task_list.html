@@ -1,0 +1,60 @@
+{% extends "../registration/base.html" %}
+
+{% block title %}
+    Tasks Page
+{% endblock title %}
+
+{% block content %}
+    <div class="container col-md-6 shadow-sm rounded p-2 my-5">
+        <div class="shadow-sm rounded p-2 mb-2">
+            Hi <strong>{{ request.user.email }}</strong> - <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    
+        <div class="mb-3 shadow-sm rounded p-2">
+            <h2>Create Your Task:</h2>
+            <form method="post" action="{% url 'task_create' %}" class="row">
+                {% csrf_token %}
+                <div class="col-6">
+                    <input type="text" class="form-control" name="title" id="formGroupExampleInput" placeholder="title of task">
+                </div>
+                <div class="col-4">
+                    <button type="submit" class="btn btn-secondary">Add</button>
+                </div>
+            </form>
+        </div>
+        <div class="shadow-sm rounded p-2">
+            <h2>Your Tasks:</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">title</th>
+                        <th scope="col">done?</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>
+                                {% if task.done %}
+                                    <del>{{ task.title }}</del>
+                                {% else %}
+                                    {{ task.title }}
+                                {% endif %}
+                            </td>
+                            <td>{{ task.done }}</td>
+                            <td>
+                                <a href="{% url 'task_delete' task.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{% url 'task_done' task.id %}" class="btn btn-info btn-sm">Done</a>
+                                <a href="{% url 'task_update' task.id %}" class="btn btn-primary btn-sm">Update</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                  <tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}
